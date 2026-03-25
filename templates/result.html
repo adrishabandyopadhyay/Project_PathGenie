@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Career Results – PathGenie</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Spline+Sans:wght@300..700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="result-page">
+
+    <!-- NAV -->
+    <nav class="result-nav">
+        <div class="nav-logo">Path<span>Genie</span></div>
+        <div class="nav-right">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thepathgenie@gmail.com" target="_blank"
+                class="support-link">Support</a>
+            <a href="/" class="nav-cta">← Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="result-wrapper">
+
+        <div class="result-header">
+            <h1 class="result-main-title">Your Career Recommendations</h1>
+            <p class="result-subtitle">Based on your personality, interests and resume analysis</p>
+        </div>
+
+        {% if error %}
+        <div class="result-card error-card">
+            <div class="card-icon">⚠️</div>
+            <h3>Notice</h3>
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <div class="result-grid">
+
+            {% if personality_prediction %}
+            <div class="result-card">
+                <div class="card-label">Based on Interests & Personality</div>
+
+                <div class="career-name">{{ personality_prediction.primary.name }}</div>
+
+                <div class="match-row">
+                    <span class="match-label">Match Score</span>
+                    <span class="match-score">{{ personality_prediction.primary.match }}%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: {{ personality_prediction.primary.match }}%;"></div>
+                </div>
+
+                {% if personality_prediction.alternates %}
+                <div class="alts-label">Alternative Paths</div>
+                <div class="alts-grid">
+                    {% for alt in personality_prediction.alternates %}
+                    <div class="alt-card">
+                        <span class="alt-name">{{ alt.name }}</span>
+                        <span class="alt-score">{{ alt.match }}%</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if resume_prediction %}
+            <div class="result-card">
+                <div class="card-label">Based on Resume</div>
+
+                <div class="career-name">{{ resume_prediction.primary.name }}</div>
+
+                <div class="match-row">
+                    <span class="match-label">Match Score</span>
+                    <span class="match-score">{{ resume_prediction.primary.match }}%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: {{ resume_prediction.primary.match }}%;"></div>
+                </div>
+
+                {% if resume_prediction.alternates %}
+                <div class="alts-label">Alternative Paths</div>
+                <div class="alts-grid">
+                    {% for alt in resume_prediction.alternates %}
+                    <div class="alt-card">
+                        <span class="alt-name">{{ alt.name }}</span>
+                        <span class="alt-score">{{ alt.match }}%</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+        </div>
+
+        <div class="result-footer">
+            <a href="/assess" class="retry-btn">↺ Retake Assessment</a>
+            <a href="/" class="home-btn">← Back to Home</a>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Career Recommendation</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Spline+Sans:wght@300..700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="assess-page">
+    <nav class="result-nav">
+        <div class="nav-logo">Path<span>Genie</span></div>
+        <div class="nav-right">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thepathgenie@gmail.com" target="_blank"
+                class="support-link">Support</a>
+            <a href="/" class="nav-cta">← Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Career Assessment</h1>
+
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+
+            <!-- SECTION 1 -->
+            <h2>About You</h2>
+
+            <textarea name="user_text" required
+                placeholder="Describe yourself — your personality, what motivates you, what tasks you enjoy, and your work style."></textarea>
+
+
+            <!-- SECTION 2 -->
+            <h2>Your Interests</h2>
+
+            <textarea name="interests" required
+                placeholder="What are your interests? (e.g., technology, art, helping people, business, science)"></textarea>
+
+
+            <!-- SECTION 3 -->
+            <h2>Your Skills</h2>
+
+            <textarea name="skills" required
+                placeholder="List your skills — both technical (e.g., programming, data analysis) and soft (e.g., leadership, communication)"></textarea>
+
+
+            <!-- RESUME SECTION -->
+            <h2>Upload Resume (Mandatory)</h2>
+
+            <p class="resume-note">
+                Accepted formats: PDF, DOCX. Maximum size: 5MB.
+            </p>
+
+            <input type="file" name="resume" accept=".pdf,.docx" required>
+            <br>
+            <button type="submit" class="submit-btn">
+                Generate Career Recommendation
+            </button>
+
+        </form>
+    </div>
+
+</body>
+
+</html>
