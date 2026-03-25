@@ -155,5 +155,3 @@ def predict():
                                resume_prediction=None,
                                error=str(e))
 
-if __name__ == '__main__':
-    app.run(debug=True)
