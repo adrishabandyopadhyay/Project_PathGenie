@@ -144,9 +144,43 @@ def predict():
                         'alternates': []
                     }
 
+        combined_prediction = None
+        if personality_prediction and resume_prediction:
+            combined_scores_map = {}
+            
+            for pred in [personality_prediction, resume_prediction]:
+                if pred and 'primary' in pred:
+                    name = str(pred['primary']['name'])
+                    score = float(pred['primary']['match'])
+                    combined_scores_map.setdefault(name, []).append(score)
+                
+                if pred and 'alternates' in pred:
+                    for alt in pred['alternates']:
+                        name = str(alt['name'])
+                        score = float(alt['match'])
+                        combined_scores_map.setdefault(name, []).append(score)
+            
+            combined_scores = {}
+            for name, scores in combined_scores_map.items():
+                # If a career appeared in both lists, give it a significant boost
+                if len(scores) > 1:
+                    final_score = min(99.1, max(scores) + 8.5)
+                else:
+                    # Otherwise, keep its score and give a slight confidence curve
+                    final_score = min(96.5, scores[0] + 3.0)
+                combined_scores[name] = final_score
+            
+            if combined_scores:
+                sorted_combined = sorted(combined_scores.items(), key=lambda x: x[1], reverse=True)
+                combined_prediction = {
+                    'primary': {'name': str(sorted_combined[0][0]), 'match': float(round(sorted_combined[0][1], 1))},
+                    'alternates': [{'name': str(name), 'match': float(round(score, 1))} for name, score in sorted_combined[1:4]]
+                }
+
         return render_template('result.html',
                                personality_prediction=personality_prediction,
-                               resume_prediction=resume_prediction)
+                               resume_prediction=resume_prediction,
+                               combined_prediction=combined_prediction)
 
     except Exception as e:
         print(f"Error during prediction: {e}")

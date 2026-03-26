@@ -39,6 +39,34 @@
 
         <div class="result-grid">
 
+            {% if combined_prediction %}
+            <div class="result-card combined-card" style="grid-column: 1 / -1; border: 2px solid var(--primary); box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                <div class="card-label">🔥 Overall Combined Recommendation</div>
+
+                <div class="career-name">{{ combined_prediction.primary.name }}</div>
+
+                <div class="match-row">
+                    <span class="match-label">Combined Match Score</span>
+                    <span class="match-score">{{ combined_prediction.primary.match }}%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: {{ combined_prediction.primary.match }}%; background: linear-gradient(90deg, var(--primary), var(--secondary));"></div>
+                </div>
+
+                {% if combined_prediction.alternates %}
+                <div class="alts-label">Alternative Paths</div>
+                <div class="alts-grid">
+                    {% for alt in combined_prediction.alternates %}
+                    <div class="alt-card">
+                        <span class="alt-name">{{ alt.name }}</span>
+                        <span class="alt-score">{{ alt.match }}%</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
             {% if personality_prediction %}
             <div class="result-card">
                 <div class="card-label">Based on Interests & Personality</div>
