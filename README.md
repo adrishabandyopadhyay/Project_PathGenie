@@ -28,4 +28,5 @@ An AI-based career recommendation system that predicts suitable career paths by 
 - Integrated multiple models for hybrid recommendation  
 - Focused on explainable outputs  
 
+
 ---
